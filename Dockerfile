@@ -1,7 +1,8 @@
 FROM node:lts-alpine@sha256:2ae9624a39ce437e7f58931a5747fdc60224c6e40f8980db90728de58e22af7c
+RUN apk add dumb-init
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 COPY --chown=node:node . /usr/src/app
 RUN npm ci --only=production
 USER node
-CMD "npm" "start"
+CMD ["dumb-init", "node", "server.js"]
